@@ -2,13 +2,12 @@
   "askcliStatesVersion": "2020-03-31",
   "profiles": {
     "default": {
-      "skillId": "alvaro-assistant",
+      "skillId": "alexa-chatgpt",
       "skillInfrastructure": {
         "@ask-cli/cfn-deployer": {
           "deployState": {}
         }
-      },
-      "deploymentStatus": "IN_PROGRESS"
+      }
     }
   }
 }

@@ -7,7 +7,7 @@
       },
       "code": {
         "default": {
-          "src": "."
+          "src": "./lambda"
         }
       },
       "skillInfrastructure": {
