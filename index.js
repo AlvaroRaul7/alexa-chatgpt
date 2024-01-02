@@ -1,26 +1,24 @@
 const Alexa = require("ask-sdk-core");
 const axios = require("axios");
 
+
 async function askToGPT(prompt) {
   const response = await axios.post(
-    "https://api.openai.com/v1/engines/text-davinci-003/completions",
+    "https://api.openai.com/v1/threads/thread_0NYHKo52ubjM4lI65eGLFDvz/messages",
     {
-      prompt,
-      max_tokens: 100,
-      n: 1,
-      temperature: 0.5,
-      stop: ".",
-      top_p: 1,
+      "role": "user",
+      "content": prompt,
     },
     {
       headers: {
         "Content-Type": "application/json",
+        "OpenAI-Beta": "assistants=v1",
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}}`,
       },
     }
   );
 
-  return response.data.choices[0].text;
+  return response.content.text.value;
 }
 
 function formatString(text) {
@@ -35,7 +33,7 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
     const response =
-      'Seja bem-vindo ao GPT-3. Você pode perguntar algo como "chat, qual a capital da França?"';
+      'Hola soy tu asistente virtual, puedes preguntarme lo que quieras"';
 
     return handlerInput.responseBuilder.speak(response).getResponse();
   },
@@ -71,7 +69,7 @@ const HelpIntentHandler = {
   },
   handle(handlerInput) {
     const speakOutput =
-      "Você pode perguntar algo como 'chat, ideia de nome para bebês'";
+      "Puedes preguntarme cosas como '¿Cuánto está el dólar hoy?'";
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
@@ -88,7 +86,7 @@ const CancelAndStopIntentHandler = {
     );
   },
   handle(handlerInput) {
-    const speakOutput = "Até mais!";
+    const speakOutput = "¡Hasta luego!";
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
@@ -104,7 +102,7 @@ const FallbackIntentHandler = {
   },
   handle(handlerInput) {
     const speakOutput =
-      "Desculpe, não tenho conhecimento sobre isso. Por favor, tente novamente.";
+      "Disculpa, no tengo conocimiento sobre eso .";
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
@@ -129,7 +127,7 @@ const IntentReflectorHandler = {
     );
   },
   handle(handlerInput) {
-    const speakOutput = `Que tal me perguntar algo como 'quanto está o dólar hoje?'`;
+    const speakOutput = `Puedes preguntar lo que quieras!'`;
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
@@ -141,7 +139,7 @@ const ErrorHandler = {
   },
   handle(handlerInput) {
     const speakOutput =
-      "Desculpe, parece que tivemos um problema aqui! Acesse github.com/joao208/alexa-chatgpt para mais informações.";
+      "Disculpa tenemos un problema MAYDAY jaja.";
 
     return handlerInput.responseBuilder.speak(speakOutput).getResponse();
   },
